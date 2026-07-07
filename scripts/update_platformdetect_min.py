@@ -38,7 +38,9 @@ def update_requirement(version: str) -> bool:
     setup_text = SETUP_PY.read_text(encoding="utf-8")
     match = REQUIREMENT_RE.search(setup_text)
     if not match:
-        raise RuntimeError("Could not find Adafruit-PlatformDetect requirement in setup.py")
+        raise RuntimeError(
+            "Could not find Adafruit-PlatformDetect requirement in setup.py"
+        )
 
     current_version = match.group(2)
     if release_tuple(version) <= release_tuple(current_version):
@@ -50,7 +52,9 @@ def update_requirement(version: str) -> bool:
 
     updated_text = REQUIREMENT_RE.sub(rf"\g<1>{version}\3", setup_text, count=1)
     SETUP_PY.write_text(updated_text, encoding="utf-8")
-    print(f"Updated Adafruit-PlatformDetect minimum from {current_version} to {version}")
+    print(
+        f"Updated Adafruit-PlatformDetect minimum from {current_version} to {version}"
+    )
     return True
 
 

@@ -33,10 +33,7 @@ PLATFORM_DEPENDENCY_INSTALLS = {
     "adafruit_raspberry_pi5_neopixel_write": (
         "pip install Adafruit-Blinka-Raspberry-Pi5-Neopixel"
     ),
-    "lgpio": (
-        "pip install lgpio --find-links "
-        "https://github.com/adafruit/lgpio-python-wheels/raw/main/wheels/"
-    ),
+    "lgpio": "pip install adafruit-lgpio",
 }
 
 

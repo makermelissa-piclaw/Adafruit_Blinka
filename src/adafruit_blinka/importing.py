@@ -9,6 +9,7 @@
 * Author(s): Melissa LeBlanc-Williams
 """
 
+import sys
 
 try:
     from importlib import import_module
@@ -24,7 +25,6 @@ except ImportError as e:
 
 from adafruit_blinka.agnostic import detector
 
-
 PLATFORM_DEPENDENCY_INSTALLS = {
     "Adafruit_BBIO": "pip install Adafruit_BBIO",
     "Jetson": "pip install Jetson.GPIO",
@@ -39,7 +39,17 @@ PLATFORM_DEPENDENCY_INSTALLS = {
 
 def raise_for_missing_platform_dependency(error: ModuleNotFoundError):
     """Raise a helpful message for known optional platform dependencies."""
-    install_command = PLATFORM_DEPENDENCY_INSTALLS.get(error.name)
+    install_command = None
+    if sys.implementation.name == "cpython":
+        from adafruit_blinka.platform_dependencies import (
+            get_platform_requirement_for_import,
+        )
+
+        requirement = get_platform_requirement_for_import(detector, error.name)
+        if requirement is not None:
+            install_command = f"pip install {requirement}"
+    if install_command is None:
+        install_command = PLATFORM_DEPENDENCY_INSTALLS.get(error.name)
     if install_command is None:
         raise error
 

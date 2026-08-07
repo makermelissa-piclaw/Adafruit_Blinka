@@ -49,6 +49,12 @@ running CircuitPython and would likely conflict in unhappy ways.
 The test suites in the test/src folder under **testing.universal** are by design
 intended to run on *either* CircuitPython *or* CPython/Micropython+compatibility layer to prove conformance.
 
+Platform-specific dependencies are detected when Blinka starts. When Blinka is
+running in an interactive terminal and a dependency is missing, it offers to
+install the packages needed by the detected board into the current Python
+environment. In non-interactive environments, the existing import error includes
+the command needed to install the missing platform package.
+
 Installing from PyPI
 =====================
 
